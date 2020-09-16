@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}<title>Kechie Empire| Sign Up</title>{% endblock %}
+
+{% block content %}
+<form method="post" class="breadcrumb" style="display: -ms-flexbox; margin-top: 10%; margin-left: 20%; margin-right: 20%;">
+     <fieldset>
+        {% csrf_token %}
+        {{ form| crispy }}
+        <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+          <label class="form-check-label" for="invalidCheck2">
+            Agree to terms and conditions
+          </label>
+        </div>
+        </div>
+     <button type="submit" class="btn btn-primary">Sign Up</button>
+     <small class="form-text text-muted">Have an account? Login <a href="{% url 'login' %}">here</a></small>
+     </fieldset>
+ </form>
+{% endblock %}
+{% block footer %}
+{% endblock %}

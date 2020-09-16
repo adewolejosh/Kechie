@@ -1,0 +1,20 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+{% if user.is_authenticated %}
+<head>
+    {% block title %}<title>Kechies | {{ user.username }}</title>{% endblock %}
+</head>
+{% endif %}
+
+{% block content %}
+<div style="margin-top: 10%; margin-bottom: 5%; margin-left: 15px;">
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+</div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

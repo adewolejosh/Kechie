@@ -1,0 +1,119 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}<title>Kechie Empire| Checkout</title>{% endblock %}
+
+{% block content %}
+<body>
+    <div class="row row-cols-1 row-cols-md-2" style="margin-top: 18%; margin-bottom: 5%; margin-left: 5%; margin-right:5%;">
+        <div class="col mb-2">
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Email</label>
+                  <input class="form-control" id="inputEmail4" type="email" value="{{ request.user.email }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPhoneNo">Phone Number</label>
+                  <input type="tel" class="form-control" id="inputPhoneNo" placeholder="+234 909 3894 783">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputFirstName">First Name</label>
+                  <input class="form-control" id="inputFirstName" type="text" value="{{ request.user.first_name }}" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputLastName">Last Name</label>
+                  <input class="form-control" id="inputLastName" type="text" value="{{ request.user.last_name }}" readonly>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Home/Office Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="Home/Workplace address">
+              </div>
+              <div class="form-group">
+                <label for="inputAddress2">Purchase Collection Location</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Where would you like to receive your purchase?">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputCity">City</label>
+                  <input type="text" class="form-control" id="inputCity">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputState">State</label>
+                  <input id="inputState" class="form-control">
+<!--                  <select id="inputState" class="form-control">-->
+<!--                    <option selected>Choose...</option>-->
+<!--                    <option>...</option>-->
+<!--                  </select>-->
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="inputZip">Zip</label>
+                  <input type="text" class="form-control" id="inputZip">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck">
+                  <label class="form-check-label" for="gridCheck">
+                    <small>I have read and agreed to all T&Cs</small>
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Make Payment</button>
+            </form>
+<!--            <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">-->
+<!--              <input type="hidden" name="public_key" value="FLWPUBK_TEST-SANDBOXDEMOKEY-X" />-->
+<!--              <input type="hidden" name="customer[email]" value="jessepinkman@walterwhite.org" />-->
+<!--              <input type="hidden" name="customer[phone_number]" value="0900192039940" />-->
+<!--              <input type="hidden" name="customer[name]" value="Jesse Pinkman" />-->
+<!--              <input type="hidden" name="tx_ref" value="bitethtx-019203" />-->
+<!--              <input type="hidden" name="amount" value="3400" />-->
+<!--              <input type="hidden" name="currency" value="NGN" />-->
+<!--              <input type="hidden" name="meta[token]" value="54" />-->
+<!--              <input type="hidden" name="redirect_url" value="https://demoredirect.localhost.me/" />-->
+<!--              <button type="submit">CHECKOUT</button>-->
+<!--            </form>-->
+        </div>
+        <div class="col mb-2 mt-4">
+            <div class="card p-2" style="box-shadow: 2px 3px 4px 4px rgba(0, 0, 0, 0.6);">
+            {% if items %}
+            <div class="form-row">
+                <div class="form-group col-md-5 col-9">
+                  <input style="font-size: 18px" class="form-control-plaintext form-control bg-white" type="text" value="Product" disabled>
+                </div>
+                <div class="form-group col-md-2 col">
+                  <input style="font-size: 18px" class="form-control-plaintext form-control bg-white" type="text" value="Quantity" disabled>
+                </div>
+            </div>
+            {% for i in items %}
+                    <div class="form-row">
+                        <div class="form-group col-md-5 col-9">
+                          <input style="font-size: 13px" class="form-control" value="{{ i.product|title }}" disabled>
+                        </div>
+                        <div class="form-group col-md-2 col">
+                          <input style="font-size: 14px" type="tel" class="form-control" value=" x {{ i.quantity }}" disabled>
+                        </div>
+                    </div>
+
+            {% endfor %}
+
+            <label for="amount">Subtotal:</label>
+            <div id="amount" class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div style="font-size: 13px" class="input-group-text">NGN</div>
+                </div>
+                <input style="font-size: 13px" class="form-control col-md-6" name="amount" value="{{ total }}" readonly/>
+            </div>
+            {% else %}
+                <h4 style="text-align: center; font-family: Forum; font-weight: 200;">No Items to Checkout!</h4>
+            {% endif %}
+        </div>
+        </div>
+    {% block footer %}
+    {% endblock %}
+    </div>
+</body>
+{% endblock %}

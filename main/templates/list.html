@@ -1,0 +1,30 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}<title>Kechie Empire| {{ category }}</title>{% endblock %}
+
+{% block content %}
+<body>
+    <div class="row row-cols-1 row-cols-md-4" style="margin-top: 18%; margin-bottom: 5%; margin-left: 5%; margin-right:5%;">
+    {% for a in product %}
+      <div class="col mb-4">
+        <div class="card">
+          <img src="{{ a.image.url }}" class="card-img-top" alt="{{ a.name|title }}">
+          <div class="card-body">
+            <div class="card-title">
+                <h6 style="font-size: 10px">{{ a.name|title }}</h6>
+                <h6 style="color: pink; font-weight: 500; font-size: 10px;">₦ {{ a.price }}</h6>
+            </div>
+<!--            <h5 class="card-title" style="font-size: 12px;">{{ a.name|title }}</h5>-->
+              <a class="card-title" href="{% url 'detail' a.id %}" style="color: black;">
+                  <button class="btn btn-outline-success btn-sm" style="font-size: 10px;">View Product</button>
+              </a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+        <small>None yet</small>
+    {% endfor %}
+    </div>
+</body>
+{% endblock %}

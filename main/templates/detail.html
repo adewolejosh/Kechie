@@ -1,0 +1,39 @@
+{% extends './base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!--                </p>-->
+{% block title %}<title>Kechie Empire| {{ product.name }}</title>{% endblock %}
+
+
+{% block content %}
+<head>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}" rel="script"></script>
+</head>
+
+<body>
+<!--    <div class="row row-cols-2 row-cols-md-4" style="margin-top: 5%; margin-left: 5%; margin-right:5%;">-->
+   <div class="card mb-3" style="border: none; margin-top: 25%; margin-left: 10%; margin-right: 10%; max-width: 80%;">
+    {% if product %}
+       <div class="text-center">
+           <img src="{{ product.image.url }}" style="max-height: 50%; max-width: 50%" class="card-img-top" alt="{{ product.name|title }}">
+       </div>
+      <div class="col-md-8">
+          <div class="card-body">
+            <p class="card-title" style="font-size: 15px;">
+                {{ product.name|title }}
+                <h6 class="card-text" style="font-size: 10px; color: grey;">{{ product.genders }}  {{ product.category }}</h6>
+            </p>
+
+            <p class="card-text" id="price" style="font-size: 12px; font-style: italic; color: pink; font-weight: 500">₦ {{ product.price }}</p>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text"><button type="button" class="btn btn-outline-info btn-block">Place Order</button></p>
+            {% csrf_token %}
+            <button id="update" data-product={{product.id}} data-action="add" class="btn btn-outline-success btn-block update-cart">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    </div>
+
+</body>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}<title>Kechie Empire| My Cart</title>{% endblock %}
+
+{% block content %}
+<body>
+    <div class="text-center" style="margin-top: 15%; margin-bottom: 5%; margin-left: 5%; margin-right: 5%;">
+        <h4>My Cart</h4>
+    {% if items %}
+    <table class="table table-responsive">
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    {% for i in items %}
+      <tbody>
+        <tr>
+          <th scope="row"></th>
+          <td><img src="{{ i.product.image.url }}" style="max-height: 20%; max-width: 20%" class="img-fluid"></td>
+          <td><h6 style="font-size: 10px">{{ i.product|title }}</h6></td>
+          <td><h6 style="color: pink; font-size: 10px;">₦ {{ i.product.price }}</h6></td>
+          <td><h6>
+              <img class="updatecart" data-product={{i.product.id}} data-action="remove" src="{% static 'images/arrow down.jpg' %}">
+              {{ i.quantity }}
+              <img class="updatecart" data-product={{i.product.id}} data-action="add" src="{% static 'images/arrow up.jpg' %}">
+          </h6></td>
+        </tr>
+      </tbody>
+    {% endfor %}
+        <tbody>
+            <tr>
+                <th scope="row"></th>
+                <td></td>
+                <td class="text-right">Total:</td>
+                <td class="text-left" style="font-size: 10px;">₦ {{ total }}</td>
+                <td><a href="{% url 'checkout' %}"><button class="btn btn-outline-success btn-sm">Checkout</button></a></td>
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+        <h4 style="text-align: center; font-family: Forum; font-weight: 200;">No Items in Cart!</h4>
+    {% endif %}
+    </div>
+</body>
+{% endblock %}

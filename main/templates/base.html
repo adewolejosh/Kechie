@@ -1,0 +1,305 @@
+{% load static %}
+<html lang="en">
+
+{% block head %}
+
+<!---->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">-->
+<!--  <link href="https://fonts.googleapis.com/css2?family=Gothic+A1;400;500;700;900" rel='stylesheet'>-->
+<!--  <link href="https://fonts.googleapis.com/css2?family=Forum" rel='stylesheet'>-->
+<!--  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel='stylesheet'>-->
+<!--    &lt;!&ndash; CSS only &ndash;&gt;-->
+<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">-->
+
+<!--&lt;!&ndash; JS, Popper.js, and jQuery &ndash;&gt;-->
+<!--  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
+<!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>-->
+<!--  <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">-->
+<!--  <title>Kechies Empire</title>-->
+<!--</head>-->
+<!---->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.js' %}" rel="script"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}" rel="script"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1;400;500;700;900" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Forum" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel='stylesheet'>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    {% block title %}<title>Kechies Empire| Welcome</title>{% endblock %}
+    <script>
+
+        // a function that grabs cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // a 16-digit random number generator in javascript for device cookie
+        function createUUID() {
+           return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+           });
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        let device = getCookie('device')
+
+        if (device == null || device == undefined){
+            device = createUUID()
+        }
+
+        var d = new Date();
+        d.setTime(d.getTime() + (24 * 60 * 60 * 3000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie= 'device=' + device + ";expires=" + expires + ";domain;path=/"
+
+        //document.cookie ='device=' + device + ";domain;path=/"
+
+        var customer = '{{ request.user }}'
+    </script>
+</head>
+{% endblock %}
+
+{% block body %}
+<body>
+    {% block nav %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand border-dark" style="font-family: 'Gothic A1'; font-weight: 500; font-size: 1.5em;" href="{% url 'home' %}">Kechies Empire</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+          <div class="collapse navbar-collapse" id="navbarColor03" style="font-family: Forum;">
+            <ul class="navbar-nav mr-auto" style="font-size: 0.9em;">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'bag' %}">Bags</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'jewelry' %}">Jewelries</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accessory' %}">Accessories</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'shoe' %}">Shoes</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Welcome, {{ user.username|default_if_none:"Dear, Customer" }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                  </li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                  </li>
+                </ul>
+                {% endif %}
+              <input class="form-control mr-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    {% endblock %}
+    {% block profile %}
+        <div class="float-right mr-5 mt-3 mb-3">
+            <img class="img-fluid" src="{% static 'images/User.jpg' %}">
+            {% if user.is_authenticated %}
+            <a style="font-size: 9px; font-family: Forum;" href="{% url 'profile' %}">Welcome, {{ user.username|default:"Dear, Customer" }}</a>
+            {% else %}
+            <a href="{% url 'profile' %}" style="font-size: 9px; font-family: Forum;">Welcome, Dear Customer</a>
+            {% endif %}
+            {% block cart %}
+
+<!--                <div style="z-index: 10; bottom: 30px; right: 30px; position: fixed; float: right; background: #FFFFFF; border-radius: 10%; box-sizing: border-box; box-shadow: 3px 6px 4px rgba(0, 0, 0, 0.25);">-->
+<!--                    <img class="img-fluid" style="border-radius: 20%" src="{% static 'images/cart.jpg' %}">-->
+
+<!--&lt;!&ndash;                    {% if cartItems %}&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a style="font-size: 9px; font-family: Forum; color: black;">{{ cartItems }}</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    {% else %}&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a style="font-size: 9px; font-family: Forum; color: black;">0</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    {% endif %}&ndash;&gt;-->
+<!--                </div>-->
+                <a href="{% url 'cart' %}">
+                    <img class="img-fluid" src="{% static 'images/cart.jpg' %}" style="z-index: 2; border-radius: 60%; bottom: 20px; right: 10px; position: fixed; float: right; background: #FFFFFF; box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.6);">
+                    {% if cartItems %}
+                    <a style="z-index: 3; font-size: 11px; font-family: Forum; color: orange; bottom: 57px; right: 19px; position: fixed; float: right;">{{ cartItems }}</a>
+                    {% else %}
+                    <a style="z-index: 3; font-size: 11px; font-family: Forum; color: orange; bottom: 57px; right: 19px; position: fixed; float: right;">0</a>
+                    {% endif %}
+                </a>
+            {% endblock %}
+        </div>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+    {% block footer %}
+    <footer class="page-footer font-small font-white mdb-color lighten-3 pt-4" style="background: #343A40; color: white;">
+
+  <!-- Footer Links -->
+      <div class="container text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+
+            <!-- Content -->
+            <h5 class="font0.9-weight-bold text-uppercase mb-4" style="font-size: 1em; font-family: Gothic A1">Subscribe to our news letter</h5>
+            <form class="form-inline my-2 my-lg-0" style="float: center; font-family: Forum;">
+                <p>
+                    <input class="form-control mr-sm-2 border-dark" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com" type="text">
+                </p>
+                <p>
+                  <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Subscribe</button>
+                </p>
+            </form>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none">
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+            <!-- Links -->
+            <h5 class="font-weight-bold text-uppercase mb-4" style="font-size: 1em; font-family: Gothic A1">US</h5>
+
+            <ul class="list-unstyled" style="font-size: 1.2em font-family: Forum;">
+              <li>
+                <p>
+                  <a href="#!">About Us</a>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a href="#!">Contact</a>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a href="#!">Blog</a>
+                </p>
+              </li>
+<!--              <li>-->
+<!--                <p>-->
+<!--                  <a href="#!">AWARDS</a>-->
+<!--                </p>-->
+<!--              </li>-->
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none">
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+            <!-- Contact details -->
+            <h5 class="font-weight-bold text-uppercase mb-4" style="font-size: 1em; font-family: Gothic A1">Address</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <p>
+                  <i class="fas fa-home mr-3"></i> Mainland, Lagos 100222 Nigeria</p>
+              </li>
+              <li>
+                <p>
+                  <i class="fas fa-envelope mr-3"></i> info@kechies.com</p>
+              </li>
+              <li>
+                <p>
+                  <i class="fas fa-phone mr-3"></i> + 234 901 5760 078</p>
+              </li>
+              <li>
+                <p>
+                  <i class="fas fa-print mr-3"></i> + 234 909 3894 783</p>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <hr class="clearfix w-100 d-md-none">
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
+
+            <!-- Social buttons -->
+            <h5 class="font-weight-bold text-uppercase mb-4" style="font-size: 1em; font-family: Gothic A1">Follow Us</h5>
+
+            <!-- Facebook -->
+            <a type="button" class="btn-floating" href="#">
+    <!--          <i class="fab fa-facebook-f"></i>-->
+                <img class="img-fluid" src="{% static 'images/facebook.jpeg' %}" style="max-width: 10%; max-height: 10%; z-index: 3; "/>
+            </a>
+            <!-- Instagram -->
+            <a type="button" class="btn-floating btn-inst" onclick="window.location.href='https://instagram.com/kechieaccessories' ">
+    <!--          <i class="fab fa-instagram"></i>-->
+                <img class="img-fluid" src="{% static 'images/insta.jpeg' %}" style="max-width: 10%; max-height: 10%; z-index: 4"/>
+            </a>
+            <!-- Google +-->
+            <a type="button" class="btn-floating btn-wa" href="https://wa.me/2349015760078">
+    <!--          <i class="fab fa-google-plus-g"></i>-->
+                <img src="{% static 'images/wa.jpg' %}"/>
+            </a>
+            <!-- Dribbble -->
+            <a type="button" class="btn-floating btn-dribbble">
+              <i class="fab fa-dribbble"></i>
+            </a>
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+      <!-- Footer Links -->
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3" style="font-size: 13px;">© 2020 Copyright:
+        <a href="#" style="color: grey;"> Kechies Dev</a>
+    <!--    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>-->
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    {% endblock %}
+    <script src="{% static 'js/cart.js' %}" type="text/javascript" rel="script"></script>
+</body>
+{% endblock %}
+</html>
