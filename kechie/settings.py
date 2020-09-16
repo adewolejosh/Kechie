@@ -1,4 +1,5 @@
 import os
+from uuid import uuid4
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -8,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=qi@g$cxun57!#lsz=dxxr!5do49c-gvx0k%y*j-7b7e*qly^z'
+SECRET_KEY = str(uuid4)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -121,12 +122,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = 'static/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_PORT = 465
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'adewole.josh.mydjangotestmail@gmail.com'
-EMAIL_HOST_PASSWORD = 'mydjangotestmail'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'accounts.models.EmailBackend']
 AUTH_USER_MODEL = 'accounts.User'
