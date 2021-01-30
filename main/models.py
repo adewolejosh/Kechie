@@ -67,9 +67,61 @@ class CartItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.order.customer
+        return '%s - %s' % (self.order.pk, self.order.customer)
 
     @property
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    email = models.EmailField()
+    phone = models.PositiveIntegerField()
+    firstName = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    h_o_address = models.TextField(max_length=300, verbose_name='Home/Office Address')
+    o_c_address = models.TextField(max_length=300, verbose_name='Order Collection Address')
+    city = models.TextField(max_length=20)
+    state = models.CharField(max_length=20)
+    zip = models.IntegerField(default=100200)
+
+    created = models.DateTimeField(auto_now_add=True)
+    date_ordered = models.DateField(auto_now_add=True)
+    time_ordered = models.TimeField(auto_now_add=True)
+
+    pending = models.BooleanField(default=True)
+    complete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '# %s - %s' % (self.pk, self.customer)
+
+
+class ItemOrder(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    # order = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    # date_added = models.DateTimeField(auto_now_add=True)
+    # cartProducts = models.ForeignKey(CartItem, on_delete=models.CASCADE)
+    ordering = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '# %s - %s' % (self.ordering.pk, self.ordering.customer)
+
+    @property
+    def transaction_id(self):
+        return self.ordering.pk
+
+    @property
+    def pending_status(self):
+        return self.ordering.pending
+
+    @property
+    def complete_status(self):
+        return self.ordering.complete
+
+    # @property
+    # def get_total(self):
+    #     return self.cartProducts.get_total

@@ -25,10 +25,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    <link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}" rel="script"></script>
     <script src="{% static 'js/bootstrap.bundle.js' %}" rel="script"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1;400;500;700;900" rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Forum" rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel='stylesheet'>
@@ -84,7 +86,7 @@
 {% block body %}
 <body>
     {% block nav %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top color-dark">
         <a class="navbar-brand border-dark" style="font-family: 'Gothic A1'; font-weight: 500; font-size: 1.5em;" href="{% url 'home' %}">Kechies Empire</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -109,7 +111,7 @@
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">Welcome, {{ user.username|default_if_none:"Dear, Customer" }}</a>
+                    <a class="nav-link" href="{% url 'profile' %}">Welcome,   {{ user.username|default_if_none:"Dear, Customer" }}</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -130,26 +132,8 @@
             </form>
         </div>
     </nav>
-    {% endblock %}
-    {% block profile %}
-        <div class="float-right mr-5 mt-3 mb-3">
-            <img class="img-fluid" src="{% static 'images/User.jpg' %}">
-            {% if user.is_authenticated %}
-            <a style="font-size: 9px; font-family: Forum;" href="{% url 'profile' %}">Welcome, {{ user.username|default:"Dear, Customer" }}</a>
-            {% else %}
-            <a href="{% url 'profile' %}" style="font-size: 9px; font-family: Forum;">Welcome, Dear Customer</a>
-            {% endif %}
-            {% block cart %}
-
-<!--                <div style="z-index: 10; bottom: 30px; right: 30px; position: fixed; float: right; background: #FFFFFF; border-radius: 10%; box-sizing: border-box; box-shadow: 3px 6px 4px rgba(0, 0, 0, 0.25);">-->
-<!--                    <img class="img-fluid" style="border-radius: 20%" src="{% static 'images/cart.jpg' %}">-->
-
-<!--&lt;!&ndash;                    {% if cartItems %}&ndash;&gt;-->
-<!--&lt;!&ndash;                    <a style="font-size: 9px; font-family: Forum; color: black;">{{ cartItems }}</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                    {% else %}&ndash;&gt;-->
-<!--&lt;!&ndash;                    <a style="font-size: 9px; font-family: Forum; color: black;">0</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                    {% endif %}&ndash;&gt;-->
-<!--                </div>-->
+        {% block profile %}
+            <div class="float-right mr-5 mt-3 mb-3">
                 <a href="{% url 'cart' %}">
                     <img class="img-fluid" src="{% static 'images/cart.jpg' %}" style="z-index: 2; border-radius: 60%; bottom: 20px; right: 10px; position: fixed; float: right; background: #FFFFFF; box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.6);">
                     {% if cartItems %}
@@ -158,14 +142,14 @@
                     <a style="z-index: 3; font-size: 11px; font-family: Forum; color: orange; bottom: 57px; right: 19px; position: fixed; float: right;">0</a>
                     {% endif %}
                 </a>
-            {% endblock %}
-        </div>
+            </div>
+        {% endblock %}
     {% endblock %}
     {% block content %}
     {% endblock %}
     {% block footer %}
-    <footer class="page-footer font-small font-white mdb-color lighten-3 pt-4" style="background: #343A40; color: white;">
-
+    <footer class="page-footer font-small font-white navbar-light bg-light lighten-3 pt-4 mt-4">
+    <hr class="ml-4 mr-4"/>
   <!-- Footer Links -->
       <div class="container text-center text-md-left">
 
@@ -182,7 +166,7 @@
                     <input class="form-control mr-sm-2 border-dark" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com" type="text">
                 </p>
                 <p>
-                  <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Subscribe</button>
+                  <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Subscribe</button>
                 </p>
             </form>
 
@@ -213,13 +197,17 @@
                   <a href="#!">Blog</a>
                 </p>
               </li>
-<!--              <li>-->
-<!--                <p>-->
-<!--                  <a href="#!">AWARDS</a>-->
-<!--                </p>-->
-<!--              </li>-->
+              <li>
+                <p>
+                  <a href="#!">Privacy</a>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a href="#!">Terms and Conditions</a>
+                </p>
+              </li>
             </ul>
-
           </div>
           <!-- Grid column -->
 
@@ -262,23 +250,19 @@
             <h5 class="font-weight-bold text-uppercase mb-4" style="font-size: 1em; font-family: Gothic A1">Follow Us</h5>
 
             <!-- Facebook -->
-            <a type="button" class="btn-floating" href="#">
-    <!--          <i class="fab fa-facebook-f"></i>-->
-                <img class="img-fluid" src="{% static 'images/facebook.jpeg' %}" style="max-width: 10%; max-height: 10%; z-index: 3; "/>
+            <a type="button" class="btn-floating" onclick="window.location.href='https://facebook.com/kechieaccessories'">
+              <i class="fab fa-facebook fa-2x m-2"></i>
+<!--                <img class="img-fluid" src="{% static 'images/facebook.jpeg' %}" style="max-width: 10%; max-height: 10%; z-index: 3; "/>-->
             </a>
             <!-- Instagram -->
-            <a type="button" class="btn-floating btn-inst" onclick="window.location.href='https://instagram.com/kechieaccessories' ">
-    <!--          <i class="fab fa-instagram"></i>-->
-                <img class="img-fluid" src="{% static 'images/insta.jpeg' %}" style="max-width: 10%; max-height: 10%; z-index: 4"/>
+            <a type="button" class="btn-floating btn-inst" onclick="window.location.href='https://instagram.com/kechie.accessories' ">
+              <i class="fab fa-instagram fa-2x m-2"></i>
+<!--                <img class="img-fluid" src="{% static 'images/insta.jpeg' %}" style="max-width: 10%; max-height: 10%; z-index: 4"/>-->
             </a>
             <!-- Google +-->
-            <a type="button" class="btn-floating btn-wa" href="https://wa.me/2349015760078">
-    <!--          <i class="fab fa-google-plus-g"></i>-->
-                <img src="{% static 'images/wa.jpg' %}"/>
-            </a>
-            <!-- Dribbble -->
-            <a type="button" class="btn-floating btn-dribbble">
-              <i class="fab fa-dribbble"></i>
+            <a type="button" class="btn-floating btn-wa" onclick="window.location.href='https://wa.me/2349015760078' ">
+              <i class="fab fa-whatsapp fa-2x m-2"></i>
+<!--                <img src="{% static 'images/wa.jpg' %}"/>-->
             </a>
 
           </div>
@@ -292,7 +276,7 @@
 
       <!-- Copyright -->
       <div class="footer-copyright text-center py-3" style="font-size: 13px;">© 2020 Copyright:
-        <a href="#" style="color: grey;"> Kechies Dev</a>
+        <a style="color: grey;"> Kechies Dev</a>
     <!--    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>-->
       </div>
       <!-- Copyright -->

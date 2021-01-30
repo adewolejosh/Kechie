@@ -7,43 +7,57 @@
 <body>
     <div class="row row-cols-1 row-cols-md-2" style="margin-top: 18%; margin-bottom: 5%; margin-left: 5%; margin-right:5%;">
         <div class="col mb-2">
-            <form>
+            {% if items %}
+            <form method="post">
+                {% if messages %}
+                    {% for message in messages %}
+                        <small class="alert alert-success mb-md-4 mt-mb-4">{{ message }}</small>
+                    {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                <select name="customer" required="" id="id_customer" hidden>
+                  <option value="{{ request.user.id }}">{{ request.user }}</option>
+                </select>
+<!--                < name="customer" type="hidden" placeholder="{{ request.user }}" value="{{ request.user }}" hidden>-->
+<!--                <input name="customer" type="hidden" placeholder="{{ request.user }}" value="{{ request.user }}" hidden>-->
               <div class="form-row">
+
                 <div class="form-group col-md-6">
                   <label for="inputEmail4">Email</label>
-                  <input class="form-control" id="inputEmail4" type="email" value="{{ request.user.email }}" readonly>
+                  <input class="form-control" id="inputEmail4" type="email" placeholder="{{ request.user.email }}" name="email" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputPhoneNo">Phone Number</label>
-                  <input type="tel" class="form-control" id="inputPhoneNo" placeholder="+234 909 3894 783">
+                  <input type="tel" class="form-control" id="inputPhoneNo" placeholder="09093894783" name="phone" required>
+<!--                  <input type="tel" class="form-control" id="inputPhoneNo" placeholder="+234 909 3894 783">-->
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputFirstName">First Name</label>
-                  <input class="form-control" id="inputFirstName" type="text" value="{{ request.user.first_name }}" readonly>
+                  <input class="form-control" id="inputFirstName" type="text" placeholder="{{ request.user.first_name }}" name="firstName" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputLastName">Last Name</label>
-                  <input class="form-control" id="inputLastName" type="text" value="{{ request.user.last_name }}" readonly>
+                  <input class="form-control" id="inputLastName" type="text" placeholder="{{ request.user.last_name }}" name="lastName" required>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputAddress">Home/Office Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="Home/Workplace address">
+                <input type="text" class="form-control" id="inputAddress" placeholder="Home/Workplace address" name="h_o_address" required>
               </div>
               <div class="form-group">
-                <label for="inputAddress2">Purchase Collection Location</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Where would you like to receive your purchase?">
+                <label for="inputAddress1">Order Collection Location</label>
+                <input type="text" class="form-control" id="inputAddress1" placeholder="Where would you like to receive your purchase?" name="o_c_address" required>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputCity">City</label>
-                  <input type="text" class="form-control" id="inputCity">
+                  <input type="text" class="form-control" id="inputCity" name="city" required>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="inputState">State</label>
-                  <input id="inputState" class="form-control">
+                  <input id="inputState" class="form-control" name="state" required>
 <!--                  <select id="inputState" class="form-control">-->
 <!--                    <option selected>Choose...</option>-->
 <!--                    <option>...</option>-->
@@ -51,18 +65,18 @@
                 </div>
                 <div class="form-group col-md-2">
                   <label for="inputZip">Zip</label>
-                  <input type="text" class="form-control" id="inputZip">
+                  <input type="text" class="form-control" id="inputZip" name="zip" required>
                 </div>
               </div>
               <div class="form-group">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="gridCheck">
+                  <input class="form-check-input" type="checkbox" id="gridCheck" required>
                   <label class="form-check-label" for="gridCheck">
                     <small>I have read and agreed to all T&Cs</small>
                   </label>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary">Make Payment</button>
+              <button type="submit" class="btn btn-primary">Place Order</button>
             </form>
 <!--            <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">-->
 <!--              <input type="hidden" name="public_key" value="FLWPUBK_TEST-SANDBOXDEMOKEY-X" />-->
@@ -79,7 +93,7 @@
         </div>
         <div class="col mb-2 mt-4">
             <div class="card p-2" style="box-shadow: 2px 3px 4px 4px rgba(0, 0, 0, 0.6);">
-            {% if items %}
+
             <div class="form-row">
                 <div class="form-group col-md-5 col-9">
                   <input style="font-size: 18px" class="form-control-plaintext form-control bg-white" type="text" value="Product" disabled>

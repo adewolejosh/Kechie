@@ -1,23 +1,26 @@
-import random
-import uuid
 
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, get_object_or_404
+import uuid
 import json
 
 from django.views import View
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
-from .models import Product, Cart, CartItem
+from .forms import OrderForm
+from .models import Product, Cart, CartItem, Order, ItemOrder
+
 
 ###
 # todo: check if cookie is allowed
-# todo: checkout logic, payment logic
-# todo: Copy the remove functionality
+# todo: checkout logic, payment logic |_ALMOST_COMPLETED_|
+# todo: Copy the remove functionality |_COMPLETED_|
 # todo: if allowed, create a function or method to create one for 'device' on the views |_COMPLETED_|
 # todo: set customer to the created device or request.user |_COMPLETED_|
 ###
 
+# Non-URLed --- START
 
 class TestCookie(View):
     def test_cookie(self):
@@ -30,6 +33,43 @@ class TestCookie(View):
         else:
             cs = HttpResponse('Setting Cookie')
             return cs.set_cookie('device', uuid.uuid4())
+
+
+class CheckCart(View):
+
+    @staticmethod
+    def check_user_and_item(request):
+        customer_user = request.user
+        cartItem1, created = Cart.objects.get_or_create(customer=customer_user, complete=False)
+        items1 = cartItem1.cartitem_set.all()
+
+        customer_device = str(TestCookie.create_cookie(request))
+        cartItem2, created = Cart.objects.get_or_create(customer=customer_device, complete=False)
+        items2 = cartItem2.cartitem_set.all()
+
+        if len(items2) > len(items1):
+            customer = customer_device
+
+        elif len(items2) == len(items1):
+            customer = customer_device or customer_user
+
+        else:
+            customer = request.user
+
+        cartItem, created = Cart.objects.get_or_create(customer=customer, complete=False)
+        cartItems = cartItem.get_cart_items
+        items = cartItem.cartitem_set.all()
+        total = cartItem.get_cart_total
+
+        context = {
+            'items': items,
+            # 'cartItem': cartItem,
+            'cartItems': cartItems,
+            'total': total,
+        }
+        return context
+
+# Non-URLED --- END
 
 
 def home(request):
@@ -65,10 +105,31 @@ def product_list(request, listed='', ):
     context = {
         'product': Product.objects.filter(category__name=listed),
         'category': listed,
+        'gender': "All",
         'cartItems': cartItems,
     }
     return render(request, template_name, context)
 
+
+def product_categ_list(request, listed='', genders=''):
+    template_name = 'list.html'
+
+    User = request.user
+    if User.is_authenticated:
+        customer = request.user
+    else:
+        customer = str(TestCookie.create_cookie(request))
+
+    cartItem, created = Cart.objects.get_or_create(customer=customer, complete=False)
+    cartItems = cartItem.get_cart_items
+
+    context = {
+        'product': Product.objects.filter(category__name=listed, genders=genders),
+        'genders': genders,
+        'category': listed,
+        'cartItems': cartItems,
+    }
+    return render(request, template_name, context)
 
 # def product_detail(request, pk):
 #     template_name = 'detail.html'
@@ -238,9 +299,65 @@ def cart_view(request):
     return render(request, template_name, context)
 
 
+# @login_required
+class Checkout(View):
+    template_name = 'checkout.html'
+    form = OrderForm
+
+    def get(self, request):
+        form = self.form(request.GET)
+
+        context = {
+            'form': form,
+        }
+        return render(request,  self.template_name, CheckCart.check_user_and_item(request), context)
+
+    def post(self, request):
+        form = self.form(request.POST)
+        if form.is_valid():
+            new_order = form.save()
+
+            # cart elimination
+            # customer = request.user
+            customer_user = request.user
+            cartItem1, created = Cart.objects.get_or_create(customer=customer_user, complete=False)
+            items1 = cartItem1.cartitem_set.all()
+
+            customer_device = str(TestCookie.create_cookie(request))
+            cartItem2, created = Cart.objects.get_or_create(customer=customer_device, complete=False)
+            items2 = cartItem2.cartitem_set.all()
+
+            if len(items2) > len(items1):
+                customer = customer_device
+
+            elif len(items2) == len(items1):
+                customer = customer_device or customer_user
+
+            else:
+                customer = request.user
+
+            cartItem = Cart.objects.get(customer=customer, complete=False)
+            items = cartItem.cartitem_set.all()
+
+            # Order Item Creation
+            for i in items:
+                ItemOrder.objects.create(ordering=new_order, product=i.product, quantity=i.quantity)
+
+            cartItem.complete = True
+            cartItem.save()
+            # message that returns success
+            messages.success(request, "Your Order has been sent and is currently being processed")
+            return render(request, self.template_name, {'form': self.form})
+
+        else:
+            messages.error(request, 'An error occured')
+            return render(request, self.template_name, {'form': self.form})
+
+
 @login_required
 def proceed_to_checkout(request):
     template_name = 'checkout.html'
+    form = OrderForm()
 
     customer_user = request.user
     cartItem1, created = Cart.objects.get_or_create(customer=customer_user, complete=False)

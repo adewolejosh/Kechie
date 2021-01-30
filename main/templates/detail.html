@@ -12,27 +12,58 @@
 
 <body>
 <!--    <div class="row row-cols-2 row-cols-md-4" style="margin-top: 5%; margin-left: 5%; margin-right:5%;">-->
-   <div class="card mb-3" style="border: none; margin-top: 25%; margin-left: 10%; margin-right: 10%; max-width: 80%;">
-    {% if product %}
-       <div class="text-center">
-           <img src="{{ product.image.url }}" style="max-height: 50%; max-width: 50%" class="card-img-top" alt="{{ product.name|title }}">
-       </div>
-      <div class="col-md-8">
-          <div class="card-body">
-            <p class="card-title" style="font-size: 15px;">
-                {{ product.name|title }}
-                <h6 class="card-text" style="font-size: 10px; color: grey;">{{ product.genders }}  {{ product.category }}</h6>
-            </p>
+    <div class="row row-cols-1 row-cols-md-2 m-5">
+        {% if product %}
+        <div class="col-md-9 mb-1 mt-5">
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col">
+                    <img src="{{ product.image.url }}" class="card-img" alt="{{ product.name|title }}">
+                </div>
+                <div class="col">
+                    <p class="card-title" style="font-size: 15px;">
+                        {{ product.name|title }}
+                        <h6 class="card-text" style="font-size: 10px; color: grey;">{{ product.genders }}  {{ product.category }}</h6>
+                    </p>
 
-            <p class="card-text" id="price" style="font-size: 12px; font-style: italic; color: pink; font-weight: 500">₦ {{ product.price }}</p>
-            <p class="card-text">{{ product.description }}</p>
-            <p class="card-text"><button type="button" class="btn btn-outline-info btn-block">Place Order</button></p>
-            {% csrf_token %}
-            <button id="update" data-product={{product.id}} data-action="add" class="btn btn-outline-success btn-block update-cart">Add to Cart</button>
-          </div>
+                    <p class="card-text" id="price" style="font-size: 12px; font-style: italic; color: pink; font-weight: 500">₦ {{ product.price }}</p>
+                    <h5>Product Description</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    {% csrf_token %}
+                    <button id="update" data-product={{product.id}} data-action="add" class="btn btn-outline-success btn-block update-cart">
+                        <i class="fas fa-shopping-cart fa-sm">  </i> Add to Cart
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    {% endif %}
+        <div class="card p-2 col-md-3 mt-5">
+            <h6>Delivery Rules</h6>
+            <ul>
+                <li>We provide Delivery to anywhere within Nigeria</li>
+                <li>Depending on location, Shipping fees may be included</li>
+                <li>Orders are delivered at the shortest time possible (1-3 days)</li>
+                <li>For better User Experience we operate with pay on delivery, **for now**</li>
+            </ul>
+        </div>
+        {% endif %}
+<!--    {% if product %}-->
+<!--       <div class="text-center">-->
+<!--           <img src="{{ product.image.url }}" style="max-height: 50%; max-width: 50%" class="card-img-top" alt="{{ product.name|title }}">-->
+<!--       </div>-->
+<!--      <div class="col-md-8">-->
+<!--          <div class="card-body">-->
+<!--            <p class="card-title" style="font-size: 15px;">-->
+<!--                {{ product.name|title }}-->
+<!--                <h6 class="card-text" style="font-size: 10px; color: grey;">{{ product.genders }}  {{ product.category }}</h6>-->
+<!--            </p>-->
+
+<!--            <p class="card-text" id="price" style="font-size: 12px; font-style: italic; color: pink; font-weight: 500">₦ {{ product.price }}</p>-->
+<!--            <p class="card-text">{{ product.description }}</p>-->
+<!--            {% csrf_token %}-->
+<!--            <button id="update" data-product={{product.id}} data-action="add" class="btn btn-outline-success btn-block update-cart">Add to Cart</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    {% endif %}-->
     </div>
 
 </body>

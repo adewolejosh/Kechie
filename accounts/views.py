@@ -1,10 +1,9 @@
-from django.conf import settings
+
 from django.contrib.auth.decorators import login_required
-from django.core.mail import EmailMessage
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+
 from .forms import SignUpForm, sending_mail
 
 
