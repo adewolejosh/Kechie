@@ -6,5 +6,4 @@ main/migrations
 .env
 .myvenv/
 
-!bootstrap-4.4.1-dist/js/cart.js
 bootstrap-4.4.1-dist/
