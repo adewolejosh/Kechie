@@ -26,10 +26,10 @@
           <td><h6 style="font-size: 10px">{{ i.product|title }}</h6></td>
           <td><h6 style="color: pink; font-size: 10px;">₦ {{ i.product.price }}</h6></td>
           <td><h6>
-              <i class="fas fa-caret-down fa-lg black updatecart" data-product={{i.product.id}} data-action="remove"></i>
+              <i class="fas fa-caret-down fa-lg white updatecart" data-product={{i.product.id}} data-action="remove"></i>
 <!--              <img class="updatecart" data-product={{i.product.id}} data-action="remove" src="{% static 'images/arrow down.jpg' %}">-->
               {{ i.quantity }}
-              <i class="fas fa-caret-up black fa-lg updatecart" data-product={{i.product.id}} data-action="add"></i>
+              <i class="fas fa-caret-up fa-lg white updatecart" data-product={{i.product.id}} data-action="add"></i>
 <!--              <img class="updatecart" data-product={{i.product.id}} data-action="add" src="{% static 'images/arrow up.jpg' %}">-->
           </h6></td>
         </tr>

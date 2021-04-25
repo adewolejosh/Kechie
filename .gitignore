@@ -1,9 +1,11 @@
 db.sqlite3
 
-accounts/migrations
-main/migrations
+accounts/migrations/
+main/migrations/
 
 .env
 .myvenv/
 
 bootstrap-4.4.1-dist/
+
+__pycache__/

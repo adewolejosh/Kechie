@@ -1,26 +1,99 @@
-{% extends './base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}<title>Kechie Empire| Sign Up</title>{% endblock %}
 
-{% block content %}
-<form method="post" class="breadcrumb" style="display: -ms-flexbox; margin-top: 10%; margin-left: 20%; margin-right: 20%;">
-     <fieldset>
-        {% csrf_token %}
-        {{ form| crispy }}
-        <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-          <label class="form-check-label" for="invalidCheck2">
-            Agree to terms and conditions
-          </label>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}" rel="script"></script>
+    <script src="{% static 'js/mdb.min.js' %}" rel="script"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}" rel="script"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link href="{% static 'css/mdb.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/mystyle.css' %}" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1;400;500;700;900" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Forum" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel='stylesheet'>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <script>
+
+        // a function that grabs cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // a 16-digit random number generator in javascript for device cookie
+        function createUUID() {
+           return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+           });
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        let device = getCookie('device')
+
+        if (device == null || device == undefined){
+            device = createUUID()
+        }
+
+        var d = new Date();
+        d.setTime(d.getTime() + (24 * 60 * 60 * 3000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie= 'device=' + device + ";expires=" + expires + ";domain;path=/"
+
+        //document.cookie ='device=' + device + ";domain;path=/"
+
+        var customer = '{{ request.user }}'
+    </script>
+</head>
+
+<title>Kechie Empire| Sign Up</title>
+
+<body id="signup-body">
+    <div class="text-center">
+        <img class="img-fluid mx-auto d-block" src="{% static 'images/kechies.png' %}" id="logo"/>
+        <h4 class="mt-5">Sign Up</h4>
+    </div>
+    <form method="post" id="auth-form">
+     <div class="row row-cols-1 row-cols-md-3">
+        <div class="col"></div>
+        <div class="col card p-2">
+            {% csrf_token %}
+            {{ form| crispy }}
+            <div class="form-group justify-content-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                    <label class="form-check-label" for="invalidCheck2">
+                        Agree to terms and conditions
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn waves-effect btn-primary btn-sm">Sign Up</button>
+            <small class="form-text text-muted text-center">Have an account? Login <a href="{% url 'login' %}">here</a></small>
         </div>
-        </div>
-     <button type="submit" class="btn btn-primary">Sign Up</button>
-     <small class="form-text text-muted">Have an account? Login <a href="{% url 'login' %}">here</a></small>
-     </fieldset>
- </form>
-{% endblock %}
-{% block footer %}
-{% endblock %}
+        <div class="col"></div>
+    </div>
+</form>
+    <small class="mt-3 mb-3 form-text text-muted text-center">Go to <a href="{% url 'home' %}"> homepage</a></small>
+</body>
+
+</html>

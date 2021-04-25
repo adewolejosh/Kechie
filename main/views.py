@@ -387,8 +387,62 @@ def proceed_to_checkout(request):
             'cartItem': cartItem,
             'cartItems': cartItems,
             'total': total,
+            'form': form,
         }
 
         return render(request, template_name, context)
 
-    return render(request, template_name, )
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # order = Order.objects.create(
+            #     customer=customer,
+            #     email=email,
+            #     phone=phone,
+            #     firstName=firstname,
+            #     lastName=lastname,
+            #     h_o_address=h_o_address,
+            #     o_c_address=o_c_address,
+            #     city=city,
+            #     state=state,
+            #     zip_address=zip_address,
+            #
+            # )
+            # order.save()
+
+            # customer_user = request.user
+            # cartItem1, created = Cart.objects.get_or_create(customer=customer_user, complete=False)
+            # items1 = cartItem1.cartitem_set.all()
+            #
+            # customer_device = str(TestCookie.create_cookie(request))
+            # cartItem2, created = Cart.objects.get_or_create(customer=customer_device, complete=False)
+            # items2 = cartItem2.cartitem_set.all()
+            #
+            # if len(items2) > len(items1):
+            #     customer = customer_device
+            #
+            # elif len(items2) == len(items1):
+            #     customer = customer_device or customer_user
+            #
+            # else:
+            #     customer = request.user
+            #
+            # cartItem, created = Cart.objects.get_or_create(customer=customer, complete=False)
+            # # cartItems = cartItem.get_cart_items
+            # # items = cartItem.cartitem_set.all()
+            # # total = cartItem.get_cart_total
+            #
+            # # orderItem = OrderItem.objects.create(
+            # #     cartProducts=items, ordering=order
+            # # )
+            # # orderItem.save()
+            #
+            # cartItem.complete = True
+            # Cart.objects.get(customer=customer).complete = True
+            # Cart.objects.get(customer=customer).save()
+            # cartItem.save()
+
+            messages.success(request, "Your Order has been sent!")
+            return render(request, template_name)
+

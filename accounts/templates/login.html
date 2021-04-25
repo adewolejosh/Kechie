@@ -1,21 +1,98 @@
-{% extends './base.html' %}
+
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}<title>Kechie Empire| Login</title>{% endblock %}
+<html>
 
-{% block content %}
-<form method="post" class="mb-5" style="display: -ms-flexbox; margin-top: 20%; margin-left: 20%; margin-right: 20%;">
-    {% csrf_token %}
-    <div class="alert alert alert-success">
-        <ul class="m-0 small">
-            <li style="font-size: 8.5px;">Use your username or email</li>
-        </ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}" rel="script"></script>
+    <script src="{% static 'js/mdb.min.js' %}" rel="script"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}" rel="script"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link href="{% static 'css/mdb.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/mystyle.css' %}" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1;400;500;700;900" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Forum" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel='stylesheet'>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <script>
+
+        // a function that grabs cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // a 16-digit random number generator in javascript for device cookie
+        function createUUID() {
+           return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+           });
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        let device = getCookie('device')
+
+        if (device == null || device == undefined){
+            device = createUUID()
+        }
+
+        var d = new Date();
+        d.setTime(d.getTime() + (24 * 60 * 60 * 3000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie= 'device=' + device + ";expires=" + expires + ";domain;path=/"
+
+        //document.cookie ='device=' + device + ";domain;path=/"
+
+        var customer = '{{ request.user }}'
+    </script>
+</head>
+
+<title>Kechie Empire| Login</title>
+
+<body id="login-body">
+    <div class="text-center">
+        <img class="img-fluid mx-auto d-block" src="{% static 'images/kechies.png' %}" id="logo"/>
+        <h4 class="mt-5">Login</h4>
     </div>
-    {{ form| crispy }}
-    <button type="submit" class="btn btn-primary">Log In</button>
-    <small class="form-text text-muted" style="font-size: 10px;">Don't have an account? Sign up <a href="{% url 'signup' %}">here</a></small>
-</form>
-{% endblock %}
-{% block footer %}
-{% endblock %}
+    <form method="post" id="auth-form">
+        {% csrf_token %}
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col"></div>
+
+            <div class="col card p-2">
+
+                <a class="">
+                    <i data-mdb-toggle="tooltip" title="You could use your username/email to login" class="fas fa-info-circle float-right"></i>
+                </a>
+
+                {{ form| crispy }}
+                <button type="submit" class="btn waves-effect btn-primary btn-sm">Log In</button>
+                <small class="form-text text-muted text-center" style="font-size: 10px;">Don't have an account? Sign up <a href="{% url 'signup' %}">here</a></small>
+            </div>
+
+            <div class="col"></div>
+        </div>
+    </form>
+    <small class="mt-2 mb-2 form-text text-muted text-center">Go to <a href="{% url 'home' %}"> homepage</a></small>
+</body>
+
+</html>

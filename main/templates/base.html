@@ -28,10 +28,14 @@
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}" rel="script"></script>
+    <script src="{% static 'js/mdb.min.js' %}" rel="script"></script>
     <script src="{% static 'js/bootstrap.bundle.js' %}" rel="script"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link href="{% static 'css/mdb.min.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/mystyle.css' %}" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1;400;500;700;900" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Forum" rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display" rel='stylesheet'>
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
@@ -85,53 +89,58 @@
 
 {% block body %}
 <body>
-    {% block nav %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top color-dark">
-        <a class="navbar-brand border-dark" style="font-family: 'Gothic A1'; font-weight: 500; font-size: 1.5em;" href="{% url 'home' %}">Kechies Empire</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-          <div class="collapse navbar-collapse" id="navbarColor03" style="font-family: Forum;">
-            <ul class="navbar-nav mr-auto" style="font-size: 0.9em;">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'bag' %}">Bags</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'jewelry' %}">Jewelries</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'accessory' %}">Accessories</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'shoe' %}">Shoes</a>
-              </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                {% if user.is_authenticated %}
-                <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
+    {% block nav %}
+    <header class="fixed-top mb-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+        <a class="navbar-brand border-dark" style="font-family: 'Montserrat'; font-weight: 500; font-size: 1.5em;" href="{% url 'home' %}">Kechies Empire</a>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light color-dark justify-content-center text-center">
+              <button class="navbar-toggler justify-content-end" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+              <div class="collapse navbar-collapse fade-in-left justify-content-center" id="navbarColor03" style="font-family: Forum;">
+                <ul class="navbar-nav mr-auto justify-content-center" style="font-size: 0.9em;">
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">Welcome,   {{ user.username|default_if_none:"Dear, Customer" }}</a>
+                    <a class="nav-link" href="{% url 'bag' %}">Bags</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                  </li>
-                </ul>
-                {% else %}
-                <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'jewelry' %}">Jewelries</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                    <a class="nav-link" href="{% url 'accessory' %}">Accessories</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shoe' %}">Shoes</a>
                   </li>
                 </ul>
-                {% endif %}
-              <input class="form-control mr-sm-2" type="text" placeholder="Search">
-              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+                <form class="form-inline my-2 my-lg-0">
+                    {% if user.is_authenticated %}
+                    <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">Welcome,   {{ user.username|default_if_none:"Dear, Customer" }}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                      </li>
+                    </ul>
+                    {% else %}
+                    <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                      </li>
+                    </ul>
+                    {% endif %}
+                  <input class="form-control mr-sm-1" type="text" placeholder="Search">
+                  <button class="btn btn-outline-dark btn-sm my-2 my-sm-0" type="submit">Search</button>
+                </form>
+              </div>
+        </nav>
+    </header>
+
         {% block profile %}
             <div class="float-right mr-5 mt-3 mb-3">
                 <a href="{% url 'cart' %}">
@@ -144,11 +153,14 @@
                 </a>
             </div>
         {% endblock %}
+
     {% endblock %}
+
     {% block content %}
     {% endblock %}
+
     {% block footer %}
-    <footer class="page-footer font-small font-white navbar-light bg-light lighten-3 pt-4 mt-4">
+    <footer class="font-small font-white navbar-light bg-light lighten-3 pt-4 mt-4">
     <hr class="ml-4 mr-4"/>
   <!-- Footer Links -->
       <div class="container text-center text-md-left">
@@ -166,7 +178,7 @@
                     <input class="form-control mr-sm-2 border-dark" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com" type="text">
                 </p>
                 <p>
-                  <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Subscribe</button>
+                  <button class="btn btn-outline-dark btn-sm my-2 my-sm-0" type="submit">Subscribe</button>
                 </p>
             </form>
 
@@ -283,7 +295,10 @@
 
     </footer>
     {% endblock %}
+
     <script src="{% static 'js/cart.js' %}" type="text/javascript" rel="script"></script>
+
 </body>
 {% endblock %}
+
 </html>
