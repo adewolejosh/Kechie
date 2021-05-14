@@ -83,9 +83,11 @@ def home(request):
 
     cartItem, created = Cart.objects.get_or_create(customer=customer, complete=False)
     cartItems = cartItem.get_cart_items
+    latest_product = Product.objects.all().order_by('-created')[:10]
 
     context = {
         'cartItems': cartItems,
+        'products': latest_product,
     }
     return render(request, template_name, context)
 
@@ -446,3 +448,12 @@ def proceed_to_checkout(request):
             messages.success(request, "Your Order has been sent!")
             return render(request, template_name)
 
+
+# utils
+
+def terms_and_condition(request):
+    pass
+
+
+def about(request):
+    pass

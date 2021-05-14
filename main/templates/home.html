@@ -3,179 +3,87 @@
 
 {% block content %}
 <body class="mt-5">
-    <div id="carousel" class="text-center mt-5 ml-5 mr-5">
-<!--        <div class="row row-cols-1 row-cols-md-3 text-center mt-5">-->
-<!--            <div class="col-md-2"></div>-->
-<!--            <div class="col-md-8 text-center">-->
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleSlidesOnly" data-slide-to="0" class="active bg-dark"></li>
-                        <li data-target="#carouselExampleSlidesOnly" data-slide-to="1" class="bg-dark"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                                <img src="{% static 'images/Main.jpg' %}" id="1" class="img-fluid" style="border-radius: 2px"/>
+    <div id="carousel" class="text-center carousel-main-home p-2">
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleSlidesOnly" data-slide-to="0" class="active bg-dark"></li>
+                <li data-target="#carouselExampleSlidesOnly" data-slide-to="1" class="bg-dark"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                        <img src="{% static 'images/Main.png' %}" id="1" class=" carousel-main-home-img" style="border-radius: 2px"/>
+                </div>
+                <div class="carousel-item">
+                        <img src="{% static 'images/Main2.png' %}" id="2" class=" carousel-main-home-img" style="border-radius: 2px"/>
+                </div>
+            </div>
+            <div class="carousel-caption d-md-block">
+                <a style="text-decoration: none;">
+                    <h5 id="id-main-info">Shop at Kechies!</h5>
+                    <h6 id="id-main-info-body">"e be like Wondaland!"</h6>
+                    <button type="button" class="btn rounded btn-outline-white btn-sm waves-effect" style="font-size: 10px">See Collections</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="ml-4 mr-4"/>
+
+    <div class="mt-4 ml-4 mr-4">
+        <h6 class="text-center mt-4" style=" font-size: 20px; font-family: Forum">COMING SOON!</h6>
+        <div class="row row-cols-2 row-cols-md-4">
+        {% for a in product %}
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="{{ a.image.url }}" class="card-img-top" alt="{{ a.name|title }}">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h6 style="font-size: 10px">{{ a.name|title }}</h6>
+                            <h6 style="color: pink; font-weight: 500; font-size: 10px;">₦ {{ a.price }}</h6>
                         </div>
-                        <div class="carousel-item">
-                                <img src="{% static 'images/Main2.jpg' %}" id="2" class="img-fluid" style="border-radius: 2px"/>
-                        </div>
-                    </div>
-                    <div class="carousel-caption d-md-block">
-                        <a href="#allCat" style="text-decoration: none;">
-                            <button type="button" class="btn rounded btn-outline-light btn-sm" style="font-size: 16px">Shop All Products</button>
+                        <a class="card-title" href="{% url 'detail' a.id %}" style="color: black;">
+                            <button class="btn btn-outline-success btn-sm" style="font-size: 10px;">View Product</button>
                         </a>
                     </div>
                 </div>
-<!--            </div>-->
-<!--            <div class="col-md-2"></div>-->
-<!--        </div>-->
-    </div>
-    <hr class="ml-4 mr-4"/>
-    <div id="allCat">
-        <div class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row row-cols-1 row-cols-md-4 m-4">
-                        <div class="col">
-                            <div class="card p-2 ">
-                                <img src="#" alt="All Bags"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Bags</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Jewelries"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Jewelries</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Shoes"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Shoes</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Accessories"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Accessories</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-<!--        <h4>All Bags Section</h4>-->
-                <div class="carousel-item">
-                    <div class="row row-cols-1 row-cols-md-3 m-4">
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Bags"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Bags</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Female Bags"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Female Bags</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                    <div class="card p-2">
-                        <img src="#" alt="All Male Bags"/>
-                        <button class="btn btn-sm btn-outline-dark">View All Male Bags</button>
-            <!--            <h5 class="card-title"></h5>-->
-                    </div>
-                </div>
-                    </div>
-                </div>
-<!--        <h4>All Jewelries Section</h4>-->
-                <div class="carousel-item">
-                    <div class="row row-cols-1 row-cols-md-3 m-4">
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Jewelries"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Jewelries</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Female Jewelries"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Female Jewelries</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-            <div class="card p-2">
-                <img src="#" alt="All Male Jewelries"/>
-                <button class="btn btn-sm btn-outline-dark">View All Male Jewelries</button>
-    <!--            <h5 class="card-title"></h5>-->
             </div>
-        </div>
-                    </div>
-                </div>
-<!--        <h4>All Accessories Section</h4>-->
-                <div class="carousel-item">
-                    <div class="row row-cols-1 row-cols-md-3 m-4">
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Accessories"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Accessories</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Female Accessories"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Female Accessories</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-            <div class="card p-2">
-                <img src="#" alt="All Male Accessories"/>
-                <button class="btn btn-sm btn-outline-dark">View All Male Accessories</button>
-    <!--            <h5 class="card-title"></h5>-->
-            </div>
-        </div>
-                    </div>
-                </div>
-<!--        <h4>All Shoes Section</h4>-->
-                <div class="carousel-item">
-                    <div class="row row-cols-1 row-cols-md-3 m-4">
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Shoes"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Shoes</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card p-2">
-                                <img src="#" alt="All Female Shoes"/>
-                                <button class="btn btn-sm btn-outline-dark">View All Female Shoes</button>
-                    <!--            <h5 class="card-title"></h5>-->
-                            </div>
-                        </div>
-                        <div class="col">
-            <div class="card p-2">
-                <img src="#" alt="All Male Shoes"/>
-                <button class="btn btn-sm btn-outline-dark">View All Male Shoes</button>
-    <!--            <h5 class="card-title"></h5>-->
-            </div>
-        </div>
+        {% empty %}
+            <div class="col mb-4">
+                <div class="card p-3">
+                    <img src="{% static 'images/Main.png' %}" class="img-thumbnail card-img-top" alt="coming soon">
+                    <div class="card-body">
                     </div>
                 </div>
             </div>
+            <div class="col mb-4">
+                <div class="card p-3">
+                    <img src="{% static 'images/Main2.png' %}" class="img-thumbnail card-img-top" alt="coming soon">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card p-3">
+                    <img src="{% static 'images/Main.png' %}" class="img-thumbnail card-img-top" alt="coming soon">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card p-3">
+                    <img src="{% static 'images/Main2.png' %}" class="img-thumbnail card-img-top" alt="coming soon">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         </div>
     </div>
+
     <hr class="ml-4 mr-4"/>
     <div>
-        <h6 class="text-center mt-4" style=" font-size: 30px; font-family: Forum">Why you should shop with us</h6>
+        <h6 class="text-center mt-4" style=" font-size: 20px; font-family: Forum">Why you should shop with us</h6>
         <div class="card-columns text-center" style="margin-top: 5px; margin-left: 10%; margin-right: 10%;">
         <div class="card border-dark mb-3" style="box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.6);">
           <div class="card-header">Search - Order - Pay on Delivery</div>

@@ -99,8 +99,8 @@
               <button class="navbar-toggler justify-content-end" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-              <div class="collapse navbar-collapse fade-in-left justify-content-center" id="navbarColor03" style="font-family: Forum;">
-                <ul class="navbar-nav mr-auto justify-content-center" style="font-size: 0.9em;">
+              <div class="collapse navbar-collapse fade-in-left justify-content-center align-items-center" id="navbarColor03" style="font-family: Forum;">
+                <ul class="navbar-nav ml-5 justify-content-center " style="font-size: 1.2em;">
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'bag' %}">Bags</a>
                   </li>
@@ -114,7 +114,7 @@
                     <a class="nav-link" href="{% url 'shoe' %}">Shoes</a>
                   </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0 ml-5">
                     {% if user.is_authenticated %}
                     <ul class="navbar-nav mr-auto" style="font-size: 0.9em; font-family: Forum;">
                       <li class="nav-item">

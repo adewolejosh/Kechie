@@ -18,7 +18,7 @@
     {% for a in product %}
       <div class="col mb-4">
         <div class="card">
-          <img src="{{ a.image.url }}" class="card-img-top" alt="{{ a.name|title }}">
+          <img src="{{ a.image.url }}" class="card-img-top img-fluid mx-auto d-block product-list-img" alt="{{ a.name|title }}">
           <div class="card-body">
             <div class="card-title">
                 <h6 style="font-size: 10px">{{ a.name|title }}</h6>
